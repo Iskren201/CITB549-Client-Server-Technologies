@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { SecundHome } from '../SecundHome/SecundHome';
 
 const Slider = () => {
     const sliderRef = useRef(null);
@@ -41,7 +42,7 @@ const Slider = () => {
             } else {
                 slider.scrollTo({ left: leftScroll, behavior: 'smooth' });
             }
-        }, 15000);
+        }, 10000);
 
         return () => clearInterval(interval);
     }, [currentSlide]);
@@ -70,6 +71,7 @@ export const Home = () => {
             <div className="h-screen w-full overflow-hidden flex flex-nowrap text-center">
                 <Slider />
             </div>
+            <SecundHome />
         </>
     );
 };

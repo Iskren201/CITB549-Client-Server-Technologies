@@ -9,8 +9,8 @@ import { Service } from "./Components/Service/Service";
 import { Contact } from "./Components/Contact/Contact";
 import { Gallery } from "./Components/Gallery/Gallery";
 import { Footer } from "./Components/Footer/Footer";
-
-
+import { Error } from "./Components/Error/Error";
+// h-screen
 
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
                     <Route path="/Service" element={<Service />} />
                     <Route path="/Contact" element={<Contact />} />
                     <Route path="/Gallery" element={<Gallery />} />
+                    <Route path="*" element={<Error />} />
                 </Routes>
             </div>
             <Footer />

@@ -1,11 +1,5 @@
+import React from "react";
+
 export const Service = () => {
-  return (
-    <>
-      <h1>Services Components</h1>
-      <h1>Services Components</h1>
-      <h1>Services Components</h1>
-      <h1>Services Components</h1>
-      <h1>Services Components</h1>v<h1>Services Components</h1>
-    </>
-  );
+  return <div className="h-screen text-center">TODO:</div>;
 };
