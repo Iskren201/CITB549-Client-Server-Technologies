@@ -8,7 +8,7 @@ export const CardServices = () => {
         <>
 
             <div className="flex items-center justify-center flex-col bg-gray-600 min-h-screen rounded-full mb-6">
-                <div className="bg-[#F4F5FA] p-10 rounded-3xl">
+                <div className="bg-[#ffffff] p-10 rounded-3xl">
                     <div className="flex flex-col justify-center items-center text-center ">
                         <div className="max-w-sm font-bold font-sans">
                             Топ 3 планове за вашите любимци
@@ -19,7 +19,7 @@ export const CardServices = () => {
                     </div>
                     {/* subscriptions */}
                     <div className="flex flex-col md:flex-row space-x-0 md:space-x-8 space-y-12  md:space-y-0 justify-center items-center mt-10 ">
-                        <div className="bg-[#FFFBEC] rounded-xl ">
+                        <div className="bg-[#DBDBDB] rounded-xl ">
                             <div className="items-center flex flex-col p-8 rounded-xl bg-white shadow-xl translate-x-4 translate-y-4 w-96 md:w-auto ">
                                 <img
                                     src="https://www.jamiesale-cartoonist.com/wp-content/uploads/dog-12.png"
@@ -37,7 +37,7 @@ export const CardServices = () => {
 
                             </div>
                         </div>
-                        <div className="bg-[#F9ECFF] rounded-xl rounded-full">
+                        <div className="bg-[#DBDBDB] rounded-xl rounded-full">
                             <div className="items-center flex flex-col p-8 rounded-xl bg-white shadow-xl translate-x-4 translate-y-4 w-96 md:w-auto">
                                 <img
                                     src="https://www.jamiesale-cartoonist.com/wp-content/uploads/dog-12.png"
@@ -56,7 +56,7 @@ export const CardServices = () => {
                                 </Link>
                             </div>
                         </div>
-                        <div className="bg-[#ECEEFF] rounded-xl ">
+                        <div className="bg-[#DBDBDB] rounded-xl ">
                             <div className="items-center flex flex-col p-8 rounded-xl bg-white shadow-xl translate-x-4 translate-y-4 w-96 md:w-auto">
                                 <img
                                     src="https://www.jamiesale-cartoonist.com/wp-content/uploads/dog-12.png"
