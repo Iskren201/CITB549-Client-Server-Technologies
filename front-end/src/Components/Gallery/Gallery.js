@@ -1,147 +1,38 @@
+import React from "react";
+
+const images = [
+  "https://www.pawss.store/cdn/shop/files/Frenchbulldogdogartwatercolorpetportrait_1024x1024@2x.jpg?v=1689215488",
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBYUEhUSEhUXFxIZGB0UGRgZHB0ZHhoXGBwYGRcaICMcIi4lGiEpHhkYJTYkLC4vNTM0GiNFPjgwPS0yMzIBCwsLDw4PHhISHTIqIyk0MjIyMi80OjI3NDQvMjIyMjI1NzIyMjI2LzIyNDUvMjI6LzoyMzQvMjQyMjIyMjIyMv/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABQYDBAcBAgj/xABFEAACAgEDAgQDBQUDBw0AAAABAgADEQQSIQUxBhNBUSIyYQcUcYGRI0JSobFicsEzQ4KytNHwFyQ0U3SSk6KzwtLT8f/EABkBAQADAQEAAAAAAAAAAAAAAAABAgMEBf/EACgRAQEAAgEEAQMDBQAAAAAAAAABAhEhAxIxQQRRcaETFGFCgZHR8P/aAAwDAQACEQMRAD8A7NERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQERECG6p4i0+nsFdrPvKh9qVW2kKSwUny0bbkq2M4ztPtNRvGmkxkteB7/dtT/wDVM3WfDunvZrrUfzAmzcttteVXcygit1DYLN39zKX4J6TXrM/eTY+3SaRhi61PisW3eTsZdxO1eTntLySy2s7cpZF16b4lo1F7UVF2YByG2kK3lOtdu0nvtZ1Hsc8Zk3OR6LqP3HUPeqJ5avrqB5lgqRS+rUoNxDE8VNwAe0vHTvFlNlVttuajUqu4JD5R8ip0KZ8wMQVGBkkYx2yyws59cfkx6kvHvn8LLEo3/KCPN2fdx2z5fn1/ePfHlj4c45xvz9JbtBrEurS2ttyOoZTgjg+4PIPoQeQe8rcbPK0yl8NyIiQsREQEREBERAREQEREBERAREQEREBERAREQEREDDqPkb8D/SUL7Lf3/wDsei/1b5bes9Yr0wTzA7GwlVVFLk4GTn2GJD9A6noKrPJor+7PYQAGqaoWFc7VViNpIycJnPfAlpvtvDO67pzyhfCi56o2RnDdSYfQ/fK1yPyJH5mQe3BsYLmuq21nA7LVXrbVDY/hTKt9AhPpOpabpFFdrXV1Itr7tzqACd5DP+rAE+5HM90nSaKneyqpEssyXZRgtkljn8WJJ9yZaZ6u/t+EXp7mv5v5cj0+l2qVxZuR2etWV7yxJJFwsfbp6MlixYBmwexPE6X4JC/cKWr34be53kMS7u7WMCFUMpcsVIUAgggYM1+r9G6fp6zdbpaym9RsVNwZ3cBfgHwnLEHtJ3pmrS6mu2vOx1yoI2kDtgj0xjEjPPuThj21uxEjOq9ao0yhrn2ljhUUM7uR3CooLNj1wOPXEo0SM9lXHjOkEmynUpWP3zXuGPfFZZwPxUSx02q6q6kFWAZSOxBGQR+UmyzzFccpfFZYmh1bqC6el73DMq4+FACxLMFUDJAySQOSBIK7xvUtNVppu/aG34AK8oNO4qtZjv2kBiMbSxOeBI1U2yLbERCSIiAiIgIiICIiAiIgIiICIiAiIgUr7RD8NOPa7/0zK31ivSKlY07rzQz6la33KihAyWHBIrs34wRgn4jztBFl+0CzaKGHcC4jPuK8zJ0bwnXtqttsst4W0IwrSsPgMDtrRd2DyAxYAgHuJtLJjL93Pljcs7J9Jy0G8cOq1olau4ULY7uy7rFAFwRUrdnCtkM2AAR6zX6p40a6haUHk322IpdLCV8gt8T12KnJbHlgYVlZweOCa22gKutDoTZUnkWkhrPhViUfyS6CxH5YPluTyODjNWitXqT5dmaRSwZmQ+XUuposuR0qUVVnbWrgZc7UOTJuGMkpM8rbN/7bel1970fcEqN612G5bEdrHwmqQ+WwdQAVVyPnP+SMlNN4ms0tVelFC+ZWAtnmOy4sdfN2AVpYW21urM3yjPc4OJHwT1QKF0LV2CzOo1Ac7SjIdQzDBDFs4urPKgcnnIxK/wCKHR9ZqfJqsaxGXeMKVa1a0AdWVls0z7GVd+GUhOw7mut3Vibxj3S868r94c6v9706agLtDFlwGDrmt2rJVgBuUlSQcDIxwJSdLp21+ubezKrm0uVOGGnosFVVKkc1h2PmMRz8wyMgi0+CtU9ulyzmxVssrSw8l61bAJP72DuXd+9syck5lY1ws6frfNAG1nc1FjtSyu9hZZQW7JYrjKA91UAd22xjNWyefSc7uS+vbLqE6Ywda9HavxMnm0IamYqxViHVlZhkHvwfrJDrPjOrS0aV6kXyrUYobWapUSrYNnCMS/xcLj91ueJCdUt0rBHp0Tad/NFj2uKq1VQSXyyuc7s/u5+uJFafJbTb/M2mutk8sKX+7N5hZqg/GTbs3kc7Nv8AZl+zib3/AHV/U5utfeLHq/E41mhuVlCuPJsUo/mI6G+tdysVU5DDDKVGMjvmV/qP/Rqf7nU/9sqntRIrsB4Pl8A7A20a2naWCfDv2ld2ONxM86if+bUf3ep/7ZVJ7ZLqf9wjds3foufW/GHlWmmitbGVtjM7lF8zG41oFR2tcDkgDA98ggYtH43D02u1S+albWoq2bktVWCttfYCpVmUMCmRuHfnFQ6roSupelkzatt7MTuY+TqLXtWwVh0F6MCqt8XDLjBwceVBR94Ty3ITTu6liieV8Va4auobKw4Z9u5mb4D29IuGOv8ACZnluxPX/aBqFYIdLSW3BHC6hm2Bs7bH20nZWcDk8/EO0nz4qH3Iajy/2xs+7+Tu/wA/u2ld235QAX3bfkGcekx+D9MtmiuR1DJZdqFcH95S7V4Pv8AC/gBKVX0t31H3VbGNhtbTFh2zWu2zV5x/lBpwEz2DnbK9mNtn0T3ZSS+duk+G+qNqtMt7oKyzMAFYurKrFQ6kqpKtjI4GQR7yYmDTULWiVooVEUIqjsqqAFA+gAAmeZNyIiAiIgIiICIiAiIgIiIGl1DptN6hdRVXaoO4LYiuAcYyAwODgnmbYGBgT6iBodQ6Rp9Rj7xRVbt+XzEV8e+NwOJm0ujrqQV1IiVjgIihVHvwBibMQI7QdG09DM9GnqqduGautEJHfBKgZGZ51Domm1DBr9PTaw4BsrRyB7ZYHj6SSiBjrrCgKoAAGAAMAAdgAOwnzdUrqVdQykYKsAQR7EHgzNECGo8M6JGD16PTK45DLUgIP0IXibnUOm06hQuoqrtUHIWxFcA+4DA4M3YgRVPQNIiuqaXTqrrtcLUgDqOysAPiH0M+26JpildZ01JSs5rU1oVrJOSUGMIc88SSiBpdQ6XTqFC6imu0A5AsRXAPuNwOJ809JoSo0JRUtDZDVhFCMD3yoGDn6ib8QIfX1nTaS0aKhd6IxqqRQi7znHwjAxk5OO/PrIXwN0Rqt99qOr48qsWY37M77bGx2eywlj7hElxiTLqaVslsr2IiQsREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREDV1WpCbR+8xwBnHbufwHH6j3mLT1kDmzcfrk/wDux/IT5U77m9l+Ef1P8/6SQAkoYuPdf+Pzny6+zKP1/wAGExavVCsqCR8Rxz7ep/LieU9QR/lbd6cdpj+thMu23lftys3pj83yj8bblJ75+T9STj35kjNbUoGQ8ek+tHZuRSe/b9OJr5m1WxERAREQETTv6hWhw9iqchcEgHJ7cGbkBERAREQEREBERAREQEREBERAREQERECO0gxY49dxP68/4zfJmlqBtcWDsfhb6H0P+H5CferqLqAMYyCQc8j2yO385Gdsx3IYznVUzxd1cPYqo2VT6d2Pf8sYk34ZAsqV0ZSvYjbhlI9Dz/hIDW9Bex2xjaSVDcnJGe2PUf4GSvhbpR01jbmYll24wQuQc/mRxz9TPC6Hdl8jvzx88fZ7XX/RnxZjheZ+fqtN3CmYOnfJ9Nxx+Gf9+Y1znAVeWPAEzUV7VCj0H6n1M9/08T2zRESEqB4y8btpLrKUVia0RsgLhnc/L8XsCnb+L6SE132i3U1pepW2t13eW6hGUqcOuV7ehB59fpKI7K3mOxY2ecVYE57li2frkevM3X6c9wStRgB9jE+nbk+3OR/ozHO9t3tthNzWnVbinU9J95oU79rKaz33Y5XORz2ww/8Ay4r2kN4S0yVaOquv5QCD9X3Hef8AvZk1NMeZtlZqtDq2u8iprMKcY+ZtoAyAxJwcYGT29JG9M8TpZcdNapq1HcKTuVxjPwMMZ45wQD9JM6rTJYu2xQy+xnBepMPv1rUWMqJZ+zIPKivCJzyeNoAPPAH4TPq53Dn06/i9LDq92OXHHF/l+golW8H9ffUKa79vmhQwZf317EkfusD3H1+hlpl8M8c5uOXLG43VexES6pERAREQEREBERAREQERECH8Q9cp0dQs1Acox2gIjOS2CccDA4B7kdpVNH9pWmtfykruUEH4n2DAAJPyMx7D2l61WlSxdliqyd8MM8jsfoR7yL13hfT2jDKw+qscj8CckRxZqis6r7RNOhULS77eFwyKPy3kHOPpPqj7T6GBLU2Ltxn4kbucDscTB1r7O6FrD13ard5lYwbdwAZ1VsZXvtJwZvD7MdL636sj2Ni//CRJjOIcvdH9ougNgV7LEdsKC6EqM9hlCwX8zLzKl037P9DRYtq1s1iEMrO7uAw5B2k7cg8jjiW2WqIRESEqV4r8L6XydRctKi+xksLjIO9cKCB2HG4kDgk5PvIbSaI77LGwK97bQAATj4Sx9Odue3rLn4iPwoOD8zYPqygY/qZAsN1YB4OAPz9pwfLz507vi48banSPEn3aw0uhap2ZwVOTX8JLAZ+YfDn05J7y6aLqtNy5rsU/TOGH4g8iUHWaXdZu7BUOPxPw/wBDIw9LDj4h3z/OU6fy7jNVpn8WZ3cunXQ4PYg/nOJeIemDT9Q1BQqyeZ5mVOVQ3Et5dmPkbO7APoV95mfpKLzt/ObI6WjDDAbfbEnqfKwzmrGf7LPXGWmfwzb5esqcHCuwRj6fFkL+PfH+lOszgeu0rUvaiWOvFbVjORtZtrfUYPIIIIIE6f4M6vc6eTqirWAfs3HBsUZ3Bh/EOD9QfoTOjoY44Ti8XxHD29SW45Tx5q3xPJ7OkIiICIiAiIgIiICIiAiIgIiIGl1Fcqo/tr/rCbk1dd2X+8P6ibUrPNHsREsPJoVdUre6zT5xbXjKtxuDKGDL/EOcH2P5Z3yZxXrwtssZ9Wh3sxZCCoO3t/FnAXI4B4A7kjNMsu1bHHa8+KuoKXXy3BaptlgGcL5vC5Pb9xgeeOM4zNdXXYpByDyD+AEjPASNY2p0r1FKGrCjjaAUY8jHqTZ7nGwe5nzpkdd9bH4cgoR/a+YfTkfznF8qbnc7PjXntb7rnnsCTz+GP8T/ACmC90RkQsAXO1c/vMATgfXAmbXaC99O76U4srxgYBYgEM6qCpBYrkfp2zOV9a8X3agKgWlTU/meYucl0JUMMnGDuBwM+/YcZdP42Wcl9Nc/kY4Wz26aa88DkzYbTKAyFl8wDdt4yB9RnPaSP2f9Rr1WkWzYi3oSlijJww7EbuQGXB/Uek3PGHShdpzYo231ftK3HzLjlhn1BGeO3aa/s+N2sr8y26kc98Xac/dvPr+as/HjuayQXH0xgH8pL9A1itVTZkb0dcY9Wxk/kUB/UzJ019wIsA54I9M9jxIPTVfddS1A/wAmf2lefQc7R/ok4/AiZ9O/0+43ykst+rskSN1WsY6ZrtOAz7N6qQTnHJXAPfuPxmv0HqralN+Aqg4JBzyMZGPTv6z0L1JLJ7rzZ07cbl6iciImihERAREQEREBERAREQEREDU13ZP76/1E2pp6/wDzf99f6ibkrPNHsiuv61qKGvX5axvcbdxKAgvgZHO3POeO+DjElZGdet26a3CNYSjKEXuxYEY+g55PoJYY+gdV+81b9pVxwykY7gEHB7Z/qDIi7p1Viq1voP4iPXODjuM+hlT+yK2xC5s4ptwlWT3avccD1A5bv6yx9YQLZeuT8J83GccMN2R9M7vzBnP1LvFrhNZFPWRTeiVr5ob4WCkZrrGOcD1zjj8eZ862kbyVOV37wR/Cc4/kRK30bqPmaolFGxU5xyckgDOeR+EsVFgZmX8+fTkTmzu8e10dOduW0R428YJo9J92UF7rw+9VcoUqYMm/cAcMSOB9DOO9J0tdpVW1CVOXVcWIxXBwMhlyB+B2j6+s2fE2sN2svcnP7VlH91DtUfoBMfRuiXal3qoUMwQuQSFBABPc8Z4OM+xnbhNYyOXPnK1+lvDvQ69HStVeGcKA9mArWMB3OO3c4Hpk+5Jlmxg57Sq6otpa69o8xxWlbEk5O1AobgHPPc+g5mj1bqyUdN1TO6q9gdKxuPxWtWBhTgE445wO3pLd3OkdvG0f1HqGhP7bT63T7SM7fMUMo7/KTkgY7YyJra7RsStgH7RfjGOQQe+M+h749xON1Ub2CLnecKMkfMSB64wP6T9IdX0DjRhsquoVFLlexfADEfnzn19Zz9TpTfdj5jbHqXXbfFY+lBmQvo3XaeWpsz8LHvtYZIB9DiTXS9CKgxCqhfDMqnIDAYODgZHb0Hb6yj6TVuGqtrDIxs8tsDAdQ+xjg9xn+Y/OXfqvVk0y77dwTGcqpbnIGMAfXP5GW6WUym7NaR1Mbhxve0nE19LctiJYnKsodSQR8LAEcHkcHsZsToYEREBERAREQEREBERAT4ZwBliAPc8T7nLfEXgzqOp1Fj+bU9ZdjWHdxtQn4VChCFwMDjvjMCx+JfFtFJUAmzawYmva+Coawr377EJ/NfeWXRa2q5Q9NiWIQGBRgwweQeJyFPs36ivKvpxjOP2j92GD/mvUTBp/sx6jWwZLKEYdmS2xWH4EVgj8pOojddvmK9gEYnsFJP4Y5kb4bo1FemrTWutmoXIZ1OQRuOzkgZO3bk4HPv3kjcm5WXOMgjPB7/iCP1EhLltTCrR1itlO24qm3suLT5Z+nG2ZvEXiXT6i6z7s6uFrNFxIwCF3su1j8w5YcSXs+zDRHaN14VQFCizjA7fu57cZzJ3p3hbTU1JTXWPLrJZAwViC2STkjJPxHk/T2mM6dksa3OWyqD4H0BGnstVQpssOAMcKhKj/AM28/nInxJ1OytNQEHwgbCwzkbvhJyPbP85149GTBVSyqTnC7VAz3xheJF6XwVpa848xgc5V33AgggggjtyZSdK926m9Sa0/OKlAO2Qf+MS3/Z1qb119dVILaZyPNDE7KwRt357K3oP4sgexHTP+Snpv/V2f+K/++WDpHhvTaWrydPWUTJY/ExJY9yWJzn8/wnRpk1vEThc7gCPr+E419ozsuqWrPCJ5gAPAazg8enyLO/HRJuDkEsBtGWY4GCOxOOxPMhupeCtDqGD36cWOBjLPZnHfHDSvbztPc/O3h2pbNZpq7MlLL66zj+06j/EfznePEPiVCzaNK3NhcV9sBtvJC5+uB+v0zlX7N+mAEDTYBYNxbd8wzgj4+Dye0t2JNx3NEurtS+pairTHT1lhipcPt5+PKNzj1JBOO/Mg9Trn1dhd21LJ8YWuutURcllBBuIDkBfmI7tngYAuJ8KaY2eaVYtlm5bI+Ng7Lz3BYA4+gn23hXSldordU7bEttRce21XCgfTEyvTy51fLTvx1FX6N4msSyyitWubuq2WEvYwB3bCMhchS23AHrxk4ufQuqLqtOt6jbuyCp5KupKup4GcEHn1jpvRadOSak2k9ySzH9WJP85vV1hRgAAZJ49yck/iSSZphjcZzWeeUt4jLERLqkREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERA/9k=',
+
+];
+
 export const Gallery = () => {
   return (
-    <div className="h-screen">
+    <div>
       <>
         {/* component */}
         <section className="text-gray-600 body-font">
           <div className="container px-5 py-24 mx-auto">
             <div className="flex flex-col text-center w-full mb-20">
               <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-                Master Cleanse Reliac Heirloom
+                Това е галерията на нашата Клиника
               </h1>
               <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-                Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-                gentrify, subway tile poke farm-to-table. Franzen you probably
-                haven't heard of them man bun deep jianbing selfies heirloom.
+                Представяме ви нашата вълнуваща галерия с домашни любимци, които са получили професионално
+                внимание и грижи в нашата клиника. Разгледайте тези прекрасни снимки, за да видите как поддържаме
+                здравето и щастието на вашите любимци.
               </p>
             </div>
             <div className="flex flex-wrap -m-4">
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <div className="flex relative">
-                  <img
-                    alt="gallery"
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                    src="https://dummyimage.com/600x360"
-                  />
-                  <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                    <h2 className="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">
-                      THE SUBTITLE
-                    </h2>
-                    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                      Shooting Stars
-                    </h1>
-                    <p className="leading-relaxed">
-                      Photo booth fam kinfolk cold-pressed sriracha leggings
-                      jianbing microdosing tousled waistcoat.
-                    </p>
+              {images.map((image, index) => (
+                <div key={index} className="lg:w-1/3 sm:w-1/2 p-4">
+                  <div className="flex relative">
+                    <div className="px-8 h-300 w-200 rounded-full border-gray-200">
+                      <img style={{ maxWidth: "100%" }} src={image} alt={`Gallery Image ${index}`} />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <div className="flex relative">
-                  <img
-                    alt="gallery"
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                    src="https://dummyimage.com/601x361"
-                  />
-                  <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                    <h2 className="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">
-                      THE SUBTITLE
-                    </h2>
-                    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                      The Catalyzer
-                    </h1>
-                    <p className="leading-relaxed">
-                      Photo booth fam kinfolk cold-pressed sriracha leggings
-                      jianbing microdosing tousled waistcoat.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <div className="flex relative">
-                  <img
-                    alt="gallery"
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                    src="https://dummyimage.com/603x363"
-                  />
-                  <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                    <h2 className="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">
-                      THE SUBTITLE
-                    </h2>
-                    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                      The 400 Blows
-                    </h1>
-                    <p className="leading-relaxed">
-                      Photo booth fam kinfolk cold-pressed sriracha leggings
-                      jianbing microdosing tousled waistcoat.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <div className="flex relative">
-                  <img
-                    alt="gallery"
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                    src="https://dummyimage.com/602x362"
-                  />
-                  <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                    <h2 className="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">
-                      THE SUBTITLE
-                    </h2>
-                    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                      Neptune
-                    </h1>
-                    <p className="leading-relaxed">
-                      Photo booth fam kinfolk cold-pressed sriracha leggings
-                      jianbing microdosing tousled waistcoat.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <div className="flex relative">
-                  <img
-                    alt="gallery"
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                    src="https://dummyimage.com/605x365"
-                  />
-                  <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                    <h2 className="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">
-                      THE SUBTITLE
-                    </h2>
-                    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                      Holden Caulfield
-                    </h1>
-                    <p className="leading-relaxed">
-                      Photo booth fam kinfolk cold-pressed sriracha leggings
-                      jianbing microdosing tousled waistcoat.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <div className="flex relative">
-                  <img
-                    alt="gallery"
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                    src="https://dummyimage.com/606x366"
-                  />
-                  <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                    <h2 className="tracking-widest text-sm title-font font-medium text-indigo-500 mb-1">
-                      THE SUBTITLE
-                    </h2>
-                    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                      Alper Kamu
-                    </h1>
-                    <p className="leading-relaxed">
-                      Photo booth fam kinfolk cold-pressed sriracha leggings
-                      jianbing microdosing tousled waistcoat.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -149,3 +40,5 @@ export const Gallery = () => {
     </div>
   );
 };
+
+export default Gallery;
