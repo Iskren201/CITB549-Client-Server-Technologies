@@ -16,7 +16,7 @@ export const Comments = () => {
     return (
         <div className="flex justify-center items-center h-screen bg-gray-800">
             <div className="w-3/4 bg-gray-800 text-white border-2 p-4 rounded-lg">
-                <div className="max-w-full">
+                <div className="max-w-full bg-gray-700 p-4 rounded flex flex-col items-center">
                     {comments.map((text, index) => (
                         <div key={index} className="text-white p-2 rounded my-1">{text}</div>
                     ))}
