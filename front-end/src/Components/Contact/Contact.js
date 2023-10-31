@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-
+import style from './style.css';
 
 export const Contact = () => {
 
     const form = useRef();
+    const [showAlert, setShowAlert] = useState(false);
 
     const sendEmail = (e) => {
         e.preventDefault();
@@ -20,6 +21,10 @@ export const Contact = () => {
                 (result) => {
                     console.log(result.text);
                     e.target.reset();
+                    setShowAlert(true);
+                    setTimeout(() => {
+                        setShowAlert(false);
+                    }, 2500);
                 },
                 (error) => {
                     console.log(error.text);
@@ -29,6 +34,15 @@ export const Contact = () => {
 
     return (
         <section className="bg-white dark:bg-gray-800 h-screen">
+            {showAlert && (
+                <div
+                    className="bg-green-500  text-white text-center py-2 fixed top-auto left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
+                    style={{ animation: "fadeInOut 5s", width: "50%" }}
+                >
+                    Message sent successfully!
+                </div>
+
+            )}
             <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
                 <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
                     Contact Us
