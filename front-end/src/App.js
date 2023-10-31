@@ -10,17 +10,19 @@ import { Gallery } from "./Components/Gallery/Gallery";
 import { Footer } from "./Components/Footer/Footer";
 import { Error } from "./Components/Error/Error";
 import { Comments } from "./Components/Comments/Comments";
+import { Login } from "./Components/Login/Login";
+import { Register } from "./Components/Register/Register";
 // h-screen
 
 
 function App() {
     return (
         <BrowserRouter>
-            <nav>
-                <NavBar />
-            </nav>
+            <NavBar />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/Login" element={<Login />} />
+                <Route path="/Register" element={<Register />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/Comments" element={<Comments />} />
                 <Route path="/Contact" element={<Contact />} />
@@ -28,7 +30,7 @@ function App() {
                 <Route path="*" element={<Error />} />
             </Routes>
             <Footer />
-        </BrowserRouter>
+        </BrowserRouter >
 
     );
 };
