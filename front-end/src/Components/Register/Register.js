@@ -51,7 +51,7 @@ export const Register = () => {
                                 type="submit"
                                 className="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
                             >
-                                Login
+                                Register
                             </button>
                         </div>
                     </form>
