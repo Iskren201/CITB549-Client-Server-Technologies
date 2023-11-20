@@ -11,7 +11,7 @@ export const Comments = () => {
 
   const onClickHandler = () => {
     if (comment.trim() === "") {
-      return; // Prevent submission of empty comment
+      return;
     }
 
     if (editIndex === null) {
