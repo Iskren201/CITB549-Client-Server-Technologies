@@ -30,31 +30,12 @@ function App() {
     setUserEmail("");
   };
 
-  //   return (
-  //     <BrowserRouter>
-  //       <NavBar />
-  //       <Routes>
-  //         <Route path="/" element={<Home />} />
-  //         <Route path="/Login" element={<Login />} />
-  //         <Route path="/Register" element={<Register />} />
-  //         <Route path="/About" element={<About />} />
-  //         <Route path="/Comments" element={<Comments />} />
-  //         <Route path="/Contact" element={<Contact />} />
-  //         <Route path="/Gallery" element={<Gallery />} />
-  //         <Route path="*" element={<Error />} />
-  //       </Routes>
-  //       <Footer />
-  //     </BrowserRouter>
-  //   );
-
   return (
     <BrowserRouter>
-      {isLoggedIn && <NavBar />}{" "}
+      <NavBar />
       <Routes>
-        <Route
-          path="/"
-          element={isLoggedIn ? <Home /> : <Login setLoggedIn={setLoggedIn} />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/About" element={<About />} />
         <Route path="/Comments" element={<Comments />} />
@@ -62,9 +43,28 @@ function App() {
         <Route path="/Gallery" element={<Gallery />} />
         <Route path="*" element={<Error />} />
       </Routes>
-      {isLoggedIn && <Footer />}{" "}
+      <Footer />
     </BrowserRouter>
   );
+
+  //   return (
+  //     <BrowserRouter>
+  //       {isLoggedIn && <NavBar />}{" "}
+  //       <Routes>
+  //         <Route
+  //           path="/"
+  //           element={isLoggedIn ? <Home /> : <Login setLoggedIn={setLoggedIn} />}
+  //         />
+  //         <Route path="/Register" element={<Register />} />
+  //         <Route path="/About" element={<About />} />
+  //         <Route path="/Comments" element={<Comments />} />
+  //         <Route path="/Contact" element={<Contact />} />
+  //         <Route path="/Gallery" element={<Gallery />} />
+  //         <Route path="*" element={<Error />} />
+  //       </Routes>
+  //       {isLoggedIn && <Footer />}{" "}
+  //     </BrowserRouter>
+  //   );
 }
 
 export default App;
