@@ -3,7 +3,6 @@ import { AboutCards } from "./AboutCards/AboutCards";
 export const About = () => {
   return (
     <>
-      {/* component */}
       <div className="py-6 bg-gray-800">
         <div className="container m-auto px-6 md:px-12 xl:px-6">
           <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12 lg:flex-row-reverse">
