@@ -7,6 +7,26 @@ export const Comments = () => {
 
   const onChangeHandler = (e) => {
     setComment(e.target.value);
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ Text: comment }),
+    };
+
+    if (editIndex === null) {
+      fetch("/Comments/AddComment", requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error("Error:", error));
+    } else {
+      fetch("/Comments/UpdateComment", requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error("Error:", error));
+      setEditIndex(null);
+    }
+    setComment("");
   };
 
   const onClickHandler = () => {
