@@ -23,7 +23,7 @@ export const Comments = () => {
     if (editIndex === null) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/comments",
+          "http://localhost:5208/comments",
           requestOptions
         );
         const data = await response.json();
@@ -34,7 +34,7 @@ export const Comments = () => {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/comments/${comments[editIndex].id}`,
+          `http://localhost:5208/comments/${comments[editIndex].id}`,
           {
             ...requestOptions,
             method: "PUT",
