@@ -7,6 +7,12 @@ export const Comments = () => {
 
   const onChangeHandler = (e) => {
     setComment(e.target.value);
+  };
+
+  const onClickHandler = async () => {
+    if (comment.trim() === "") {
+      return;
+    }
 
     const requestOptions = {
       method: "POST",
@@ -15,32 +21,33 @@ export const Comments = () => {
     };
 
     if (editIndex === null) {
-      fetch("/Comments/AddComment", requestOptions)
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error("Error:", error));
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/comments",
+          requestOptions
+        );
+        const data = await response.json();
+        setComments((comments) => [...comments, data]);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     } else {
-      fetch("/Comments/UpdateComment", requestOptions)
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error("Error:", error));
-      setEditIndex(null);
-    }
-    setComment("");
-  };
-
-  const onClickHandler = () => {
-    if (comment.trim() === "") {
-      return;
-    }
-
-    if (editIndex === null) {
-      setComments((comments) => [...comments, comment]);
-    } else {
-      const updatedComments = [...comments];
-      updatedComments[editIndex] = comment;
-      setComments(updatedComments);
-      setEditIndex(null);
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/comments/${comments[editIndex].id}`,
+          {
+            ...requestOptions,
+            method: "PUT",
+          }
+        );
+        const data = await response.json();
+        const updatedComments = [...comments];
+        updatedComments[editIndex] = data;
+        setComments(updatedComments);
+        setEditIndex(null);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     }
     setComment("");
   };
