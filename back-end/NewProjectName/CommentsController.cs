@@ -1,43 +1,57 @@
+// CommentsController.cs
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using System.Linq;
 
-[ApiController]
-[Route("api/[controller]")]
-public class CommentsController : ControllerBase
+public class CommentsController : Controller
 {
-    private static List<Comment> comments = new List<Comment>();
+    private readonly ApplicationDbContext _context;
 
-    [HttpGet]
-    public ActionResult<IEnumerable<Comment>> Get()
+    public CommentsController(ApplicationDbContext context)
     {
-        return Ok(comments);
+        _context = context;
+    }
+
+    public IActionResult Index()
+    {
+        var comments = _context.Comments.ToList();
+        return View(comments);
     }
 
     [HttpPost]
-    public ActionResult<Comment> Post([FromBody] Comment comment)
+    public IActionResult AddComment(Comment comment)
     {
-        comment.Id = Guid.NewGuid();
-        comments.Add(comment);
-        return Ok(comment);
-    }
-
-    [HttpPut("{id}")]
-    public ActionResult<Comment> Put(Guid id, [FromBody] Comment updatedComment)
-    {
-        Comment existingComment = comments.Find(c => c.Id == id);
-        if (existingComment == null)
+        if (ModelState.IsValid)
         {
-            return NotFound();
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
         }
-
-        existingComment.Text = updatedComment.Text;
-        return Ok(existingComment);
+        return RedirectToAction("Index");
     }
-}
 
-public class Comment
-{
-    public Guid Id { get; set; }
-    public string Text { get; set; }
+    [HttpPost]
+    public IActionResult UpdateComment(Comment comment)
+    {
+        if (ModelState.IsValid)
+        {
+            var existingComment = _context.Comments.Find(comment.Id);
+            if (existingComment != null)
+            {
+                existingComment.Text = comment.Text;
+                _context.SaveChanges();
+            }
+        }
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public IActionResult DeleteComment(int id)
+    {
+        var comment = _context.Comments.Find(id);
+        if (comment != null)
+        {
+            _context.Comments.Remove(comment);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Index");
+    }
 }

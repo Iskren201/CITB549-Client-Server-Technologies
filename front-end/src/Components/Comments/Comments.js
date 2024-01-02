@@ -7,47 +7,40 @@ export const Comments = () => {
 
   const onChangeHandler = (e) => {
     setComment(e.target.value);
+
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ Text: comment }),
+    // };
+
+    // if (editIndex === null) {
+    //   fetch("/Comments/AddComment", requestOptions)
+    //     .then((response) => response.json())
+    //     .then((data) => console.log(data))
+    //     .catch((error) => console.error("Error:", error));
+    // } else {
+    //   fetch("/Comments/UpdateComment", requestOptions)
+    //     .then((response) => response.json())
+    //     .then((data) => console.log(data))
+    //     .catch((error) => console.error("Error:", error));
+    //   setEditIndex(null);
+    // }
+    // setComment("");
   };
 
-  const onClickHandler = async () => {
+  const onClickHandler = () => {
     if (comment.trim() === "") {
       return;
     }
 
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ Text: comment }),
-    };
-
     if (editIndex === null) {
-      try {
-        const response = await fetch(
-          "http://localhost:5208/comments",
-          requestOptions
-        );
-        const data = await response.json();
-        setComments((comments) => [...comments, data]);
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      setComments((comments) => [...comments, comment]);
     } else {
-      try {
-        const response = await fetch(
-          `http://localhost:5208/comments/${comments[editIndex].id}`,
-          {
-            ...requestOptions,
-            method: "PUT",
-          }
-        );
-        const data = await response.json();
-        const updatedComments = [...comments];
-        updatedComments[editIndex] = data;
-        setComments(updatedComments);
-        setEditIndex(null);
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      const updatedComments = [...comments];
+      updatedComments[editIndex] = comment;
+      setComments(updatedComments);
+      setEditIndex(null);
     }
     setComment("");
   };
