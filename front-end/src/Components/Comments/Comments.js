@@ -101,7 +101,6 @@ export const Comments = () => {
           {editIndex === null ? "Submit" : "Update"}
         </button>
       </div>
-      <div>sd</div>
     </div>
   );
 };
