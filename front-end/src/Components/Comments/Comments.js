@@ -1,53 +1,117 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const Comments = () => {
+  // const [comment, setComment] = useState("");
+  // const [comments, setComments] = useState([]);
+  // const [editIndex, setEditIndex] = useState(null);
+
+  // const onChangeHandler = (e) => {
+  //   setComment(e.target.value);
+  // };
+
+  // const onClickHandler = () => {
+  //   if (comment.trim() === "") {
+  //     return;
+  //   }
+
+  //   if (editIndex === null) {
+  //     setComments((comments) => [...comments, comment]);
+  //   } else {
+  //     const updatedComments = [...comments];
+  //     updatedComments[editIndex] = comment;
+  //     setComments(updatedComments);
+  //     setEditIndex(null);
+  //   }
+  //   setComment("");
+  // };
+
+  // const onDeleteHandler = (index) => {
+  //   const updatedComments = comments.filter((_, i) => i !== index);
+  //   setComments(updatedComments);
+  // };
+
+  // const onEditHandler = (index) => {
+  //   setComment(comments[index]);
+  //   setEditIndex(index);
+  // };
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
-  const onChangeHandler = (e) => {
-    setComment(e.target.value);
+  useEffect(() => {
+    // Fetch existing comments when component mounts
+    fetchComments();
+  }, []);
 
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ Text: comment }),
-    // };
-
-    // if (editIndex === null) {
-    //   fetch("/Comments/AddComment", requestOptions)
-    //     .then((response) => response.json())
-    //     .then((data) => console.log(data))
-    //     .catch((error) => console.error("Error:", error));
-    // } else {
-    //   fetch("/Comments/UpdateComment", requestOptions)
-    //     .then((response) => response.json())
-    //     .then((data) => console.log(data))
-    //     .catch((error) => console.error("Error:", error));
-    //   setEditIndex(null);
-    // }
-    // setComment("");
+  const fetchComments = async () => {
+    try {
+      const response = await fetch("/api/comments"); // Replace with your actual endpoint
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
   };
 
-  const onClickHandler = () => {
+  const onChangeHandler = (e) => {
+    setComment(e.target.value);
+  };
+
+  const onClickHandler = async () => {
     if (comment.trim() === "") {
       return;
     }
 
     if (editIndex === null) {
-      setComments((comments) => [...comments, comment]);
+      // Add new comment
+      try {
+        const response = await fetch("/api/comments/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ comment }),
+        });
+        const data = await response.json();
+        setComments([...comments, data]);
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
     } else {
-      const updatedComments = [...comments];
-      updatedComments[editIndex] = comment;
-      setComments(updatedComments);
-      setEditIndex(null);
+      // Update existing comment
+      try {
+        const response = await fetch(`/api/comments/update/${editIndex}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ comment }),
+        });
+        const data = await response.json();
+        const updatedComments = [...comments];
+        updatedComments[editIndex] = data;
+        setComments(updatedComments);
+        setEditIndex(null);
+      } catch (error) {
+        console.error("Error updating comment:", error);
+      }
     }
+
     setComment("");
   };
 
-  const onDeleteHandler = (index) => {
-    const updatedComments = comments.filter((_, i) => i !== index);
-    setComments(updatedComments);
+  const onDeleteHandler = async (index) => {
+    // Delete comment
+    try {
+      await fetch(`/api/comments/delete/${index}`, {
+        method: "DELETE",
+      });
+      const updatedComments = comments.filter((_, i) => i !== index);
+      setComments(updatedComments);
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
   };
 
   const onEditHandler = (index) => {
