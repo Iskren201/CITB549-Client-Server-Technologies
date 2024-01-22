@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import axios from "axios";
 export const Comments = () => {
   // const [comment, setComment] = useState("");
   // const [comments, setComments] = useState([]);
@@ -38,87 +38,52 @@ export const Comments = () => {
   const [comments, setComments] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
-  useEffect(() => {
-    // Fetch existing comments when component mounts
-    fetchComments();
-  }, []);
-
-  const fetchComments = async () => {
-    try {
-      const response = await fetch("http://localhost:7244/api/comments");
-      const data = await response.json();
-      console.log(data); // Проверка на получените данни в конзолата
-      setComments(data);
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-    }
+  const onChangeHandler = (e) => {
+    setComment(e.target.value);
   };
 
-  const sendCommentToServer = async () => {
-    try {
-      const response = await fetch("http://localhost:7244/api/comments/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: comment }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add comment");
-      }
-
-      // Продължете с обработката на успешния отговор тук
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
-  };
-
-  const onClickHandler = async () => {
+  const onClickHandler = () => {
     if (comment.trim() === "") {
       return;
     }
 
-    try {
-      // Send the comment to the server
-      const newComment = await sendCommentToServer(comment);
-
-      // Update the state with the new comment
-      setComments([...comments, newComment]);
-      setComment("");
-    } catch (error) {
-      // Handle error, e.g., display an error message to the user
-      console.error("Failed to add comment:", error);
+    if (editIndex === null) {
+      setComments((comments) => [...comments, comment]);
+    } else {
+      const updatedComments = [...comments];
+      updatedComments[editIndex] = comment;
+      setComments(updatedComments);
+      setEditIndex(null);
     }
+    setComment("");
+
+    axios.post("http://localhost:7132/api/comments", {
+      comment: comment,
+    });
   };
 
-  const onDeleteHandler = async (index) => {
-    try {
-      const response = await fetch(
-        `http://localhost:7244/api/comments/delete/${index}`,
-        {
-          method: "DELETE",
-        }
-      );
+  const onDeleteHandler = (index) => {
+    axios.delete(`http://localhost:7132/api/comments/${index}`);
 
-      if (response.ok) {
-        // Remove the comment from state if deletion is successful
-        const updatedComments = comments.filter((_, i) => i !== index);
-        setComments(updatedComments);
-      } else {
-        // Handle error, e.g., display an error message to the user
-        console.error("Failed to delete comment:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error deleting comment:", error);
-    }
+    const updatedComments = comments.filter((_, i) => i !== index);
+    setComments(updatedComments);
   };
 
   const onEditHandler = (index) => {
-    // Your logic for handling edit mode...
-    // This might include updating the UI to allow editing the selected comment
-    // You can setEditIndex(index) to indicate that the comment at 'index' is being edited
+    setComment(comments[index]);
+    setEditIndex(index);
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:7132/api/comments")
+      .then((response) => {
+        setComments(response.data.comments);
+      })
+      .catch((error) => {
+        console.error("Error loading comments:", error);
+      });
+  }, []);
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-800">
@@ -156,8 +121,7 @@ export const Comments = () => {
         <textarea
           className="w-full h-40 p-2 my-2 border text-black rounded"
           value={comment}
-          // onChange={onChangeHandler}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={onChangeHandler}
         />
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
