@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 const formatDateTime = (dateTimeString) => {
-  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "numeric",
+  };
+
   const dateTime = new Date(dateTimeString);
   return dateTime.toLocaleDateString("en-US", options);
 };
@@ -136,7 +143,7 @@ export const Comments = () => {
                   className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded "
                   onClick={() => onEditHandler(index)}
                 >
-                  Eddit
+                  Edit
                 </button>
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2 "
