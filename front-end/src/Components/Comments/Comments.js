@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
 const formatDateTime = (dateTimeString) => {
   const options = {
     year: "numeric",
@@ -12,6 +13,7 @@ const formatDateTime = (dateTimeString) => {
   const dateTime = new Date(dateTimeString);
   return dateTime.toLocaleDateString("en-US", options);
 };
+
 export const Comments = () => {
   // const [comment, setComment] = useState("");
   // const [comments, setComments] = useState([]);
@@ -47,6 +49,7 @@ export const Comments = () => {
   //   setEditIndex(index);
   // };
 
+  const [name, setName] = useState("");
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
@@ -54,6 +57,7 @@ export const Comments = () => {
   useEffect(() => {
     loadComments();
   }, [comment]);
+
   const loadComments = async () => {
     try {
       const response = await axios.get("http://localhost:7132/api/comments");
@@ -66,7 +70,8 @@ export const Comments = () => {
   const onChangeHandler = (e) => {
     setComment(e.target.value);
   };
-  const onClickHandler = (index) => {
+
+  const onClickHandler = () => {
     if (comment.trim() === "") {
       return;
     }
@@ -74,6 +79,7 @@ export const Comments = () => {
     if (editIndex === null) {
       axios
         .post("http://localhost:7132/api/comments", {
+          name: name,
           comment: comment,
         })
         .then(() => loadComments())
@@ -81,12 +87,14 @@ export const Comments = () => {
     } else {
       axios
         .put(`http://localhost:7132/api/comments/${editIndex}`, {
+          name: name,
           comment: comment,
         })
         .then(() => loadComments())
         .catch((error) => console.error("Error updating comment:", error));
     }
 
+    setName("");
     setComment("");
     setEditIndex(null);
   };
@@ -98,11 +106,13 @@ export const Comments = () => {
 
     try {
       await axios.put(`http://localhost:7132/api/comments/${editIndex}`, {
+        name: name,
         comment: comment,
       });
 
       loadComments();
 
+      setName("");
       setComment("");
       setEditIndex(null);
     } catch (error) {
@@ -116,6 +126,7 @@ export const Comments = () => {
   };
 
   const onEditHandler = (index) => {
+    setName(comments[index].name);
     setComment(comments[index].text);
     setEditIndex(index);
   };
@@ -134,6 +145,7 @@ export const Comments = () => {
                 alignItems: "center",
               }}
             >
+              <div className="mr-6">{comment.name}</div>
               <div>
                 <p>{comment.text}</p>
                 <small>{formatDateTime(comment.dateTime)}</small>
@@ -155,7 +167,17 @@ export const Comments = () => {
             </div>
           ))}
         </div>
-        <h2 className="text-2xl mt-4">Comment</h2>
+        {/* <div>
+          <label className="text-white">Name</label>
+          <input
+            type="text"
+            className="w-full p-2 my-2 border text-black rounded"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div> */}
+        <h2 className="text-2xl mt-4">Comments</h2>
+
         <textarea
           className="w-full h-40 p-2 my-2 border text-black rounded"
           value={comment}
@@ -164,7 +186,7 @@ export const Comments = () => {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           style={{ width: "100%" }}
-          onClick={onClickHandler}
+          onClick={editIndex === null ? onClickHandler : onUpdateHandler}
         >
           {editIndex === null ? "Submit" : "Update"}
         </button>
@@ -172,5 +194,3 @@ export const Comments = () => {
     </div>
   );
 };
-
-// -----------------------------------------------------------------------------------------------

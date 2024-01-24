@@ -63,14 +63,19 @@ app.get("/api/comments", (req, res) => {
 
 // Endpoint to add a comment
 app.post("/api/comments", (req, res) => {
-  const { comment } = req.body;
-  if (!comment || typeof comment !== "string") {
-    return res.status(400).json({ error: "Invalid comment format" });
+  const { name, comment } = req.body;
+  if (
+    !name ||
+    typeof name !== "string" ||
+    !comment ||
+    typeof comment !== "string"
+  ) {
+    return res.status(400).json({ error: "Invalid input format" });
   }
 
   try {
     const comments = getComments();
-    comments.push({ text: comment, dateTime: new Date() });
+    comments.push({ name, text: comment, dateTime: new Date() });
     saveComments(comments);
     res.json({ success: true });
   } catch (error) {
