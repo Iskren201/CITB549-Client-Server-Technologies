@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const formatDateTime = (dateTimeString) => {
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const dateTime = new Date(dateTimeString);
+  return dateTime.toLocaleDateString("en-US", options);
+};
 export const Comments = () => {
   // const [comment, setComment] = useState("");
   // const [comments, setComments] = useState([]);
@@ -34,62 +39,85 @@ export const Comments = () => {
   //   setComment(comments[index]);
   //   setEditIndex(index);
   // };
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
+  useEffect(() => {
+    loadComments();
+  }, [comment]);
+  const loadComments = async () => {
+    try {
+      const response = await axios.get("http://localhost:7132/api/comments");
+      setComments(response.data.comments);
+    } catch (error) {
+      console.error("Error loading comments:", error);
+    }
+  };
+
   const onChangeHandler = (e) => {
     setComment(e.target.value);
   };
-
-  const onClickHandler = () => {
+  const onClickHandler = (index) => {
     if (comment.trim() === "") {
       return;
     }
 
     if (editIndex === null) {
-      setComments((comments) => [...comments, comment]);
+      axios
+        .post("http://localhost:7132/api/comments", {
+          comment: comment,
+        })
+        .then(() => loadComments())
+        .catch((error) => console.error("Error adding comment:", error));
     } else {
-      const updatedComments = [...comments];
-      updatedComments[editIndex] = comment;
-      setComments(updatedComments);
-      setEditIndex(null);
+      axios
+        .put(`http://localhost:7132/api/comments/${editIndex}`, {
+          comment: comment,
+        })
+        .then(() => loadComments())
+        .catch((error) => console.error("Error updating comment:", error));
     }
-    setComment("");
 
-    axios.post("http://localhost:7132/api/comments", {
-      comment: comment,
-    });
+    setComment("");
+    setEditIndex(null);
   };
 
-  const onDeleteHandler = (index) => {
-    axios.delete(`http://localhost:7132/api/comments/${index}`);
+  const onUpdateHandler = async () => {
+    if (comment.trim() === "") {
+      return;
+    }
 
-    const updatedComments = comments.filter((_, i) => i !== index);
-    setComments(updatedComments);
+    try {
+      await axios.put(`http://localhost:7132/api/comments/${editIndex}`, {
+        comment: comment,
+      });
+
+      loadComments();
+
+      setComment("");
+      setEditIndex(null);
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
+
+  const onDeleteHandler = async (index) => {
+    await axios.delete(`http://localhost:7132/api/comments/${index}`);
+    loadComments();
   };
 
   const onEditHandler = (index) => {
-    setComment(comments[index]);
+    setComment(comments[index].text);
     setEditIndex(index);
   };
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:7132/api/comments")
-      .then((response) => {
-        setComments(response.data.comments);
-      })
-      .catch((error) => {
-        console.error("Error loading comments:", error);
-      });
-  }, []);
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-800">
       <div className="w-3/4 bg-gray-800 text-white border-2 p-4 rounded-lg">
         <div className="max-w-full bg-gray-700 p-4 rounded flex flex-col items-center">
-          {comments.map((text, index) => (
+          {comments.map((comment, index) => (
             <div
               key={index}
               className="text-white p-2 rounded my-1"
@@ -99,13 +127,16 @@ export const Comments = () => {
                 alignItems: "center",
               }}
             >
-              <div>{text}</div>
+              <div>
+                <p>{comment.text}</p>
+                <small>{formatDateTime(comment.dateTime)}</small>
+              </div>
               <div>
                 <button
                   className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded "
                   onClick={() => onEditHandler(index)}
                 >
-                  Edit
+                  Eddit
                 </button>
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2 "
@@ -134,3 +165,5 @@ export const Comments = () => {
     </div>
   );
 };
+
+// -----------------------------------------------------------------------------------------------
