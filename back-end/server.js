@@ -21,21 +21,22 @@ app.use((req, res, next) => {
   );
   next();
 });
-// Endpoint to edit a comment by index
+
 app.put("/api/comments/:index", (req, res) => {
   const index = parseInt(req.params.index);
   if (isNaN(index)) {
     return res.status(400).json({ error: "Invalid index format" });
   }
 
-  const { comment } = req.body;
-  if (!comment || typeof comment !== "string") {
-    return res.status(400).json({ error: "Invalid comment format" });
+  const { name, comment } = req.body;
+  if (!name || !comment || typeof name !== "string" || typeof comment !== "string") {
+    return res.status(400).json({ error: "Invalid name or comment format" });
   }
 
   try {
     const comments = getComments();
     if (index >= 0 && index < comments.length) {
+      comments[index].name = name; // Update the name field
       comments[index].text = comment;
       comments[index].dateTime = new Date();
       saveComments(comments);
@@ -61,16 +62,10 @@ app.get("/api/comments", (req, res) => {
   }
 });
 
-// Endpoint to add a comment
 app.post("/api/comments", (req, res) => {
   const { name, comment } = req.body;
-  if (
-    !name ||
-    typeof name !== "string" ||
-    !comment ||
-    typeof comment !== "string"
-  ) {
-    return res.status(400).json({ error: "Invalid input format" });
+  if (!name || !comment || typeof name !== "string" || typeof comment !== "string") {
+    return res.status(400).json({ error: "Invalid name or comment format" });
   }
 
   try {

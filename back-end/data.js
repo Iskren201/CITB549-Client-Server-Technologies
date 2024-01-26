@@ -25,7 +25,7 @@ export const saveComments = (comments) => {
 
 export const addComment = (comment) => {
   const comments = getComments();
-  comments.push({ text: comment.text, dateTime: comment.dateTime });
+  comments.push({text: comment.text, dateTime: comment.dateTime });
   saveComments(comments);
 };
 
