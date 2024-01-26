@@ -167,7 +167,7 @@ export const Comments = () => {
             </div>
           ))}
         </div>
-        {/* <div>
+        <div>
           <label className="text-white">Name</label>
           <input
             type="text"
@@ -175,7 +175,7 @@ export const Comments = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </div> */}
+        </div>
         <h2 className="text-2xl mt-4">Comments</h2>
 
         <textarea
