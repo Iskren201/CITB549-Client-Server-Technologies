@@ -1,0 +1,9 @@
+﻿@model List<CommentModel>
+
+<h3>Comments:</h3>
+<ul>
+    @foreach (var comment in Model)
+    {
+        <li><strong>@comment.Name:</strong> @comment.Text</li>
+    }
+</ul>

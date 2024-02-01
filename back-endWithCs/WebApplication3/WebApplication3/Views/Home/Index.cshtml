@@ -1,0 +1,125 @@
+﻿@using CommentModelAlias = WebApplication3.Models.CommentModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Comments</h1>
+</div>
+
+<div class="text-center">
+    <!-- Показване на съществуващите коментари -->
+    @if (ViewBag.Comments != null)
+    {
+        <div>
+            <h2>Existing Comments</h2>
+            @foreach (var comment in ViewBag.Comments as List<CommentModelAlias>)
+            {
+                <div>
+                    <p><strong>@comment.Name:</strong> <span id="commentText_@comment.Name">@comment.Text</span></p>
+                    <button type="button" onclick="editComment('@comment.Name')">Edit</button>
+                    <button type="button" onclick="deleteComment('@comment.Name')">Delete</button>
+
+                    <!-- Елементи за редактиране, скрити по подразбиране -->
+                    <div id="editForm_@comment.Name" style="display:none;">
+                        <input type="text" id="editText_@comment.Name" value="@comment.Text" />
+                        <button type="button" onclick="saveEdit('@comment.Name')">Save</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <form id="commentForm">
+        <div class="form-group">
+            <label for="nameInput">Name:</label>
+            <input type="text" id="nameInput" name="name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="textInput">Text:</label>
+            <input type="text" id="textInput" name="text" class="form-control" />
+        </div>
+
+        <button type="button" onclick="submitForm()" class="btn btn-primary">Submit</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function submitForm() {
+            var name = document.getElementById("nameInput").value;
+            var text = document.getElementById("textInput").value;
+
+            var formData = {
+                name: name,
+                text: text
+            };
+
+            if (name.trim() === '' || text.trim() === '') {
+                alert("Моля, попълнете всички полета.");
+                return;
+            }
+
+            // Изпращане на AJAX POST заявка
+            $.ajax({
+                type: "POST",
+                url: "/Home/Submit",
+                data: formData,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    alert("Грешка при записване на коментара!");
+                }
+            });
+        }
+
+        function editComment(name) {
+            // Скриване на текущите елементи и показване на елементите за редактиране
+            document.getElementById("commentText_" + name).style.display = "none";
+            document.getElementById("editForm_" + name).style.display = "block";
+
+            // Попълване на формата за редактиране със стойностите на коментара
+            document.getElementById("editText_" + name).value = document.getElementById("commentText_" + name).innerText;
+        }
+
+        function saveEdit(name) {
+            var editedText = document.getElementById("editText_" + name).value;
+
+            var formData = {
+                name: name,
+                text: editedText
+            };
+
+            // Изпращане на AJAX POST заявка за редактиране на коментара
+            $.ajax({
+                type: "POST",
+                url: "/Home/Edit",
+                data: formData,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    alert("Грешка при редактиране на коментара!");
+                }
+            });
+        }
+
+        function deleteComment(name) {
+            // Изпращане на AJAX POST заявка за изтриване на коментара
+            $.ajax({
+                type: "POST",
+                url: "/Home/Delete",
+                data: { name: name },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    alert("Грешка при изтриване на коментара!");
+                }
+            });
+        }
+    </script>
+</div>
+</div>
