@@ -19,27 +19,19 @@ export const Login = ({ setLoggedIn }) => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Добавете логика за валидация на входните данни
     const isValid = validateFormData(formData);
 
     if (isValid) {
-      // Тук може да добавите код за изпращане на заявка към сървъра за вход
-      // Ако входът е успешен, извикайте setLoggedIn(true);
       setLoggedIn(true);
 
-      // Използвайте toast за показване на съобщение за успешен вход
       toast.success("Login successful!");
     } else {
-      // Ако входът не е успешен, използвайте toast за показване на съобщение за грешка
       toast.error("Invalid email or password. Please try again.");
     }
   };
 
   const validateFormData = ({ email, password }) => {
-    // Тук можете да добавите валидация на входните данни, например:
-    // Проверка за валиден email, дължина на паролата и други
 
-    // Пример:
     if (!email || !password) {
       return false;
     }

@@ -19,13 +19,11 @@ function App() {
   const [userEmail, setUserEmail] = useState("");
 
   const handleLogin = (email) => {
-    // Вашата логика за успешен вход
     setLoggedIn(true);
     setUserEmail(email);
   };
 
   const handleLogout = () => {
-    // Вашата логика за изход
     setLoggedIn(false);
     setUserEmail("");
   };

@@ -2,7 +2,6 @@ import React from "react";
 
 const images = [
   "https://www.pawss.store/cdn/shop/files/Frenchbulldogdogartwatercolorpetportrait_1024x1024@2x.jpg?v=1689215488",
-  // ... други URL адреси на снимки
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQyR2gbFPlepeZ9Mjq2MBw_k9cKC1jZmCeyw&usqp=CAU",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrYqg-DFIcTfgmPX4ed-Ty2As6AIFK_z2pPA&usqp=CAU",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz_QOoXVDWYZiF3wSlwY37LI9hWO6HDZCeow&usqp=CAU",
